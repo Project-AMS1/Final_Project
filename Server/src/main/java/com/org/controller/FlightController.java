@@ -28,9 +28,9 @@ public class FlightController {
 	FlightService flightService;
 
 	@PostMapping("/addFlight")
-	@ExceptionHandler(RecordAlreadyPresentException.class)
-	public void addFlight(@RequestBody Flight flight) {
-		flightService.addFlight(flight);
+//	@ExceptionHandler(RecordAlreadyPresentException.class)
+	public ResponseEntity<Flight> addFlight(@RequestBody Flight flight) {
+		return (ResponseEntity<Flight>) flightService.addFlight(flight);
 	}
 
 	@GetMapping("/allFlight")

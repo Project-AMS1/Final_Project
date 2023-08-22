@@ -1,6 +1,7 @@
 package com.org.service;
 
 import java.math.BigInteger;
+import java.util.List;
 
 import org.springframework.http.ResponseEntity;
 
@@ -12,9 +13,8 @@ public interface UserService {
 
 	public Users updateUser(Users newUser);
 
-	public String deleteUser(BigInteger UserId);
 
-	public Iterable<Users> displayAllUser();
+	public List<Users> displayAllUser();
 
-	public ResponseEntity<?> findUserById(BigInteger userId);
+	public ResponseEntity<?> findUserById(Long userId);
 }

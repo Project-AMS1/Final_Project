@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -20,9 +22,10 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class AeroPlane {
+public class Aeroplane {
   @Id
-  private int plane_code;
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long plane_code;
   private int economy_seats;
   private int premiumecnomy_seats;
   private int business_seats;

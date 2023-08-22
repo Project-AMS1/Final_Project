@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -18,6 +19,7 @@ import com.org.dao.AirportDao;
 import com.org.exceptions.RecordAlreadyPresentException;
 import com.org.exceptions.RecordNotFoundException;
 
+@Transactional
 @Service
 public class AirportServiceImpl implements AirportService {
 	@Autowired
@@ -56,20 +58,10 @@ public class AirportServiceImpl implements AirportService {
 	 */
 	@Override
 	public ResponseEntity<?> addAirport(Airport airport) {
-		Optional<Airport> findById = airportDao.findById(airport.getAirportCode());
-		try {
-		if (!findById.isPresent()) {
+		
 			airportDao.save(airport);
 			return new ResponseEntity<Airport>(airport,HttpStatus.OK);
-		} 
-		else
-			throw new RecordAlreadyPresentException(
-					"Airport with code : " + airport.getAirportCode() + " already present");
-	     }
-		catch(RecordAlreadyPresentException e)
-		{
-			return new ResponseEntity<Airport>(airport,HttpStatus.NOT_FOUND);
-		}
+		
 	}
 
 	/*
@@ -77,12 +69,12 @@ public class AirportServiceImpl implements AirportService {
 	 */
 	@Override
 	public Airport modifyAirport(Airport airport) {
-		Optional<Airport> findById = airportDao.findById(airport.getAirportCode());
+		Optional<Airport> findById = airportDao.findById(airport.getAirport_name());
 		if (findById.isPresent()) {
 			airportDao.save(airport);
 		} 
 		else
-			throw new RecordNotFoundException("Airport with code: " + airport.getAirportCode() + " not exists");
+			throw new RecordNotFoundException("Airport with code: " + airport.getAirport_name() + " not exists");
 		return airport;
 	}
 

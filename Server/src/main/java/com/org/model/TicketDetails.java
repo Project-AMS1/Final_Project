@@ -30,24 +30,35 @@ import lombok.Setter;
 public class TicketDetails {
 	@Id 
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	private Long id;
+	
 	private int seats;
+	
 	private float discount;
+	
+	@JsonIgnore
 	@ManyToOne (fetch = FetchType.LAZY,cascade = CascadeType.MERGE)
-	@JoinColumn(name="email_id")
+	@JoinColumn(name="user_id")
 	private Users user;
+	
+	@JsonIgnore
 	@ManyToOne (fetch = FetchType.LAZY,cascade = CascadeType.MERGE)
 	@JoinColumn(name="flight_Id")
 	private Flight flight;
+	
 	@OneToMany(mappedBy = "ticketDetails",cascade = CascadeType.ALL, 
 			orphanRemoval = true)
 	@JsonIgnore
 	private List<Passenger> PassengerList=new ArrayList<>();
-	public void addPassenger(Passenger p) {
+	
+	public void addPassenger(Passenger p) 
+	{
 		PassengerList.add(p);// dept --> emp
 		p.setTicketDetails(this);// emp --> dept
 	}
-	public void removeTicketDetail(Passenger p) {
+	
+	public void removeTicketDetail(Passenger p) 
+	{
 		PassengerList.remove(p);
 		p.setTicketDetails(null);
 	}

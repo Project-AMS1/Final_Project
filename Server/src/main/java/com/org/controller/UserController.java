@@ -1,6 +1,7 @@
 package com.org.controller;
 
 import java.math.BigInteger;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
@@ -30,13 +31,14 @@ public class UserController {
 
 	@PostMapping("/createUser")
 	@ExceptionHandler(RecordAlreadyPresentException.class)
-	public void addUser(@RequestBody Users newUser) {
+	public void addUser(@RequestBody Users newUser) 
+	{
 
 		userService.createUser(newUser);
 	}
 
 	@GetMapping("/readAllUsers")
-	public Iterable<Users> readAllUsers() {
+	public List<Users> readAllUsers() {
 
 		return userService.displayAllUser();
 	}
@@ -50,15 +52,15 @@ public class UserController {
 
 	@GetMapping("/searchUser/{id}")
 	@ExceptionHandler(RecordNotFoundException.class)
-	public ResponseEntity<?> searchUserByID(@PathVariable("id") BigInteger userId) {
+	public ResponseEntity<?> searchUserByID(@PathVariable("id") Long userId) {
 
 		return userService.findUserById(userId);
 	}
 
-	@DeleteMapping("/deleteUser/{id}")
-	@ExceptionHandler(RecordNotFoundException.class)
-	public void deleteBookingByID(@PathVariable("id") BigInteger userId) {
-
-		userService.deleteUser(userId);
-	}
+//	@DeleteMapping("/deleteUser/{id}")
+//	@ExceptionHandler(RecordNotFoundException.class)
+//	public void deleteBookingByID(@PathVariable("id") Long userId) {
+//
+//		userService.deleteUser(userId);
+//	}
 }

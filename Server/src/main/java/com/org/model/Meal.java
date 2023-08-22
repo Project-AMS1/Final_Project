@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.MappedSuperclass;
@@ -22,10 +24,12 @@ import lombok.Setter;
 @NoArgsConstructor
 public class Meal {
 	@Id
-	int id;
-	String dish_name;
-	String dist_category;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+	private String dish_name;
+	private String dist_category;
 	@ManyToMany(mappedBy = "mealList")
+	@JsonIgnore
 	private List<Flight> flightList=new ArrayList<>();
 	
 

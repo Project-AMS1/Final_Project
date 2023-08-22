@@ -20,22 +20,26 @@ import lombok.Setter;
 @Entity
 @Table(name="city")
 @NoArgsConstructor
-public class City {
+public class City 
+{
+	
 	@Id
-
-	private String pincode;
+	private Long pincode;
+	
 	private String city_name;
 	@OneToMany(mappedBy = "city",cascade = CascadeType.ALL,
 			orphanRemoval = true)
 	@JsonIgnore
 	private List <Airport> airportList=new ArrayList<>();
 	
-	
-	public void addAirport(Airport a) {
+	public void addAirport(Airport a) 
+	{
 		airportList.add(a);
 		a.setCity(this);
 	}
-	public void removeEmployee(Airport a) {
+	
+	public void removeEmployee(Airport a) 
+	{
 		airportList.remove(a);
 		a.setCity(null);
 	}

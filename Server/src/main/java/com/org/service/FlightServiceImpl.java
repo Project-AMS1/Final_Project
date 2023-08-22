@@ -7,12 +7,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import com.org.dao.FlightDao;
 import com.org.exceptions.RecordAlreadyPresentException;
 import com.org.model.Flight;
 
+@Transactional
 @Service
 public class FlightServiceImpl implements FlightService {
 	@Autowired
@@ -23,18 +25,9 @@ public class FlightServiceImpl implements FlightService {
 	 */
 	@Override
 	public ResponseEntity<Flight> addFlight(Flight flight) {
-		Optional<Flight> findById = flightDao.findById(flight.getId());
-		try {
-		if (!findById.isPresent()) {
+//		Optional<Flight> findById = flightDao.findById(flight.getId());
 			flightDao.save(flight);
 			return new ResponseEntity<Flight>(flight,HttpStatus.OK);
-		} else
-			throw new RecordAlreadyPresentException("Flight with number: " + flight.getId() + " already present");
-	}
-		catch(RecordAlreadyPresentException e)
-		{
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
 	}
 
 	/*
