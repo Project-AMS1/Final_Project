@@ -102,9 +102,9 @@ class Signup extends Component {
     {
 
       Axios.post("http://localhost:5000/signup", {
-        fname: this.state.fname,
-        mname: this.state.mname,
-        lname: this.state.lname,
+        first_name: this.state.fname,
+        
+        last_name: this.state.lname,
         phone: this.state.phone,
         email: this.state.email,
         dob: this.state.dob,
