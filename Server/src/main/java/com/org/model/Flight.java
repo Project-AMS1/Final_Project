@@ -51,12 +51,12 @@ public class Flight {
 	private String destination;
 	
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	private LocalDate date_of_journey;
+	private LocalDate date;
 
-	@JsonFormat(pattern = "mm-dd-yyyy HH:mm:ss")
+	@JsonFormat(pattern = "HH:mm:ss")
 	private String deptDateTime;
 	
-	@JsonFormat(pattern = "mm-dd-yyyy HH:mm:ss")
+	@JsonFormat(pattern = "HH:mm:ss")
 	private String arrDateTime;
 	
 	private double economyclass_price;

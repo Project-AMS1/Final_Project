@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -30,11 +31,10 @@ public class UserController {
 	UserService userService;
 
 	@PostMapping("/createUser")
-	@ExceptionHandler(RecordAlreadyPresentException.class)
-	public void addUser(@RequestBody Users newUser) 
+	public ResponseEntity<?> addUser(@RequestBody Users newUser) 
 	{
 
-		userService.createUser(newUser);
+	return ResponseEntity.status(HttpStatus.CREATED).body(userService.createUser(newUser));
 	}
 
 	@GetMapping("/readAllUsers")
@@ -44,10 +44,10 @@ public class UserController {
 	}
 
 	@PutMapping("/updateUser")
-	@ExceptionHandler(RecordNotFoundException.class)
-	public void updateUser(@RequestBody Users updateUser) {
+	
+	public ResponseEntity<?> updateUser(@RequestBody Users updateUser) {
 
-		userService.updateUser(updateUser);
+		return ResponseEntity.status(HttpStatus.OK).body(userService.updateUser(updateUser));
 	}
 
 	@GetMapping("/searchUser/{id}")
@@ -56,6 +56,7 @@ public class UserController {
 
 		return userService.findUserById(userId);
 	}
+	
 
 //	@DeleteMapping("/deleteUser/{id}")
 //	@ExceptionHandler(RecordNotFoundException.class)

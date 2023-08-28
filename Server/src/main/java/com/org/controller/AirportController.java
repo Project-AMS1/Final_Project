@@ -16,21 +16,22 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.org.dto.AddAirportDto;
 import com.org.exceptions.RecordAlreadyPresentException;
 import com.org.exceptions.RecordNotFoundException;
 import com.org.model.Airport;
 import com.org.model.Flight;
 import com.org.service.AirportService;
 import com.org.service.AirportServiceImpl;
-@CrossOrigin("http://localhost:4200")
+@CrossOrigin
 @RestController
 @RequestMapping("/airport")
 public class AirportController {
-	@Autowired(required = true)
+	@Autowired
 	AirportService airportService;
 
 	@GetMapping("/viewAirport/{id}")
-	@ExceptionHandler(RecordNotFoundException.class)
+	
 	public Airport viewAirport(@PathVariable("id") String airportCode) {
 		return airportService.viewAirport(airportCode);
 	}
@@ -41,8 +42,7 @@ public class AirportController {
 	}
 
 	@PostMapping("/addAirport")
-	@ExceptionHandler(RecordAlreadyPresentException.class)
-	public void addAirport(@RequestBody Airport airport) {
+	public void addAirport(@RequestBody AddAirportDto airport) {
 		airportService.addAirport(airport);
 	}
 

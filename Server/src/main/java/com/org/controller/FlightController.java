@@ -3,6 +3,7 @@ package com.org.controller;
 import java.math.BigInteger;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -15,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.org.dto.AddFlightDto;
+import com.org.dto.ShowFlighDto;
 import com.org.exceptions.RecordAlreadyPresentException;
 import com.org.exceptions.RecordNotFoundException;
 import com.org.model.Flight;
@@ -24,35 +27,37 @@ import com.org.service.FlightServiceImpl;
 @RestController
 @RequestMapping("/flight")
 public class FlightController {
-	@Autowired(required = true)
-	FlightService flightService;
+	@Autowired
+private	FlightService flightService;
 
 	@PostMapping("/addFlight")
 //	@ExceptionHandler(RecordAlreadyPresentException.class)
-	public ResponseEntity<Flight> addFlight(@RequestBody Flight flight) {
-		return (ResponseEntity<Flight>) flightService.addFlight(flight);
+	public ResponseEntity<?> addFlight(@RequestBody AddFlightDto flight) {
+		return ResponseEntity.status(HttpStatus.CREATED).body(flightService.addFlight(flight));
+	}
+	@PostMapping("/viewFlight")
+	public ResponseEntity<?> showFlight(@RequestBody ShowFlighDto flight){
+		return ResponseEntity.status(HttpStatus.OK).body(flightService.showFlight(flight));
 	}
 
 	@GetMapping("/allFlight")
-	public Iterable<Flight> viewAllFlight() {
-		return flightService.viewAllFlight();
+	public ResponseEntity<?> viewAllFlight() {
+		return  ResponseEntity.status(HttpStatus.OK).body(flightService.viewAllFlight());
 	}
 
 	@GetMapping("/viewFlight/{id}")
-	@ExceptionHandler(RecordNotFoundException.class)
-	public Flight viewFlight(@PathVariable("id") Long flightNo) {
-		return flightService.viewFlight(flightNo);
+	public ResponseEntity<?> viewFlight(@PathVariable("id") Long flightNo) {
+		return ResponseEntity.status(HttpStatus.OK).body(flightService.viewFlight(flightNo));
 	}
 
 	@PutMapping("/updateFlight")
-	@ExceptionHandler(RecordNotFoundException.class)
-	public void modifyFlight(@RequestBody Flight flight) {
-		flightService.modifyFlight(flight);
+	public ResponseEntity<?> modifyFlight(@RequestBody Flight flight) {
+		return ResponseEntity.status(HttpStatus.OK).body(flightService.modifyFlight(flight));
 	}
 
 	@DeleteMapping("/deleteFlight/{id}")
-	@ExceptionHandler(RecordNotFoundException.class)
-	public void removeFlight(@PathVariable("id") Long flightNo) {
+	public String removeFlight(@PathVariable("id") Long flightNo) {
 		flightService.removeFlight(flightNo);
+		return "The flight is Deleted ";
 	}
 }

@@ -2,6 +2,7 @@ package com.org.service;
 
 import org.springframework.http.ResponseEntity;
 
+import com.org.dto.AddAirportDto;
 import com.org.model.Airport;
 
 public interface AirportService {
@@ -9,7 +10,7 @@ public interface AirportService {
 
 	public Airport viewAirport(String airportCode);
 
-	public ResponseEntity<?> addAirport(Airport airport);
+	public ResponseEntity<?> addAirport(AddAirportDto airport);
 
 	public Airport modifyAirport(Airport airport);
 

@@ -22,11 +22,11 @@ public class UserServiceImpl implements UserService {
 	UserDao userDao;
 	
 	@Override
-	public ResponseEntity<?> createUser(Users newUser) {
+	public Users createUser(Users newUser) {
 		// TODO Auto-generated method stub
 		
-			userDao.save(newUser);
-			return new ResponseEntity<Users>(newUser, HttpStatus.OK); 
+			return userDao.save(newUser);
+			
 		}
 	
 

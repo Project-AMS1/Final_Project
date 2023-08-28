@@ -9,7 +9,7 @@ import com.org.model.Users;
 
 public interface UserService {
 
-	public ResponseEntity<?> createUser(Users newUser);
+	public Users createUser(Users newUser);
 
 	public Users updateUser(Users newUser);
 

@@ -28,9 +28,17 @@ public class FeedbackServiceImpl implements FeedbackService{
 	}
 
 	@Override
-	public String deleteFeedback(Feedback feedback) {
+	public String deleteFeedback(Long id) {
+		
+		Feedback feedback=feedbackDao.findById(id).orElseThrow();
 		feedbackDao.delete(feedback);
 		return "feedback has been deleted";
+	}
+
+	@Override
+	public Feedback getFeedbackOfUser(Long id) {
+		return feedbackDao.findByUserId(id);
+		
 	}
 	
 	
