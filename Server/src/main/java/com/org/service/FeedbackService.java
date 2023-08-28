@@ -6,5 +6,6 @@ public interface FeedbackService {
 
 	public String giveFeedback(Feedback feedback);
 	public String editFeedback(Feedback feedback);
-	public String deleteFeedback(Feedback feedback);
+	public String deleteFeedback(Long id);
+	public Feedback getFeedbackOfUser(Long id);
 }

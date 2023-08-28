@@ -5,8 +5,10 @@ import java.math.BigInteger;
 import java.util.Optional;
 
 import com.org.model.Airport;
+import com.org.model.City;
 import com.org.model.Flight;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +18,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import com.org.dao.AirportDao;
+import com.org.dao.CityDao;
+import com.org.dto.AddAirportDto;
 import com.org.exceptions.RecordAlreadyPresentException;
 import com.org.exceptions.RecordNotFoundException;
 
@@ -24,6 +28,10 @@ import com.org.exceptions.RecordNotFoundException;
 public class AirportServiceImpl implements AirportService {
 	@Autowired
 	AirportDao airportDao;
+	@Autowired
+	CityDao cityDao;
+	@Autowired
+	private ModelMapper mapper;
 
 	/*
 	 * view all Airports
@@ -57,10 +65,12 @@ public class AirportServiceImpl implements AirportService {
 	 * add a airport
 	 */
 	@Override
-	public ResponseEntity<?> addAirport(Airport airport) {
-		
-			airportDao.save(airport);
-			return new ResponseEntity<Airport>(airport,HttpStatus.OK);
+	public ResponseEntity<?> addAirport(AddAirportDto airport) {
+			City c=cityDao.findById(airport.getCityId()).orElseThrow();
+	Airport a=mapper.map(airport, Airport.class);
+		c.addAirport(a);
+			airportDao.save(a);
+			return new ResponseEntity<Airport>(a,HttpStatus.OK);
 		
 	}
 

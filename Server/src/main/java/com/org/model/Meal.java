@@ -31,6 +31,17 @@ public class Meal {
 	@ManyToMany(mappedBy = "mealList")
 	@JsonIgnore
 	private List<Flight> flightList=new ArrayList<>();
+	public void addFlight(Flight f) 
+	{
+		flightList.add(f);// dept --> emp
+		f.getMealList().add(this);// emp --> dept
+	}
+	
+	public void removeFlight(Flight f) 
+	{
+		flightList.remove(f);
+f.getMealList().remove(this);
+	}
 	
 
 }

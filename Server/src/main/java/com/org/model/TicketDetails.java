@@ -57,7 +57,7 @@ public class TicketDetails {
 		p.setTicketDetails(this);// emp --> dept
 	}
 	
-	public void removeTicketDetail(Passenger p) 
+	public void removePassenger(Passenger p) 
 	{
 		PassengerList.remove(p);
 		p.setTicketDetails(null);
